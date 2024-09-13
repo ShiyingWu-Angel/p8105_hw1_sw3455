@@ -1,0 +1,6 @@
+---
+title: "p8105_hw1_sw3455"
+author: "Shiying Wu"
+date: "2024-09-13"
+output: github_document
+---
