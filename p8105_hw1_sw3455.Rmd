@@ -4,3 +4,48 @@ author: "Shiying Wu"
 date: "2024-09-13"
 output: github_document
 ---
+ All the needed package will be download in here.
+```{r library, message=FALSE}
+library(ggplot2)
+library(tidyverse)
+```
+## Problem 1
+  For problem 1, after download `palmerpenguins` package, I read `penguins` data from the package `palmerpenguins`. And then we summary the penguins data in order to collect names and values of these important variables.
+```{r summary penguins data problem 0.2}
+data("penguins", package = "palmerpenguins")
+summary(penguins)
+```
+ The penguin data have `r ncol(penguins)` columns which means have `r ncol(penguins)` variables and `r nrow(penguins)` rows means `r nrow(penguins)` observations. Based on the `summary(penguins)`, The `r ncol(penguins)` variables are `r colnames(penguins)`. The mean of flipper length is `r mean(penguins$flipper_length_mm, na.rm = TRUE)` mm.
+
+```{r problem 1 plot, message=FALSE}
+ggplot(penguins, aes(y = flipper_length_mm, x = bill_length_mm, color = species)) + geom_point()
+ggsave("penguins_p1_scatterplot.pdf")
+```
+
+## Problem 2
+For problem 2 
+```{r problem 2.1}
+p2_df = 
+  tibble(
+    vec_numeric = rnorm(10),
+    vec_logic = vec_numeric>0,
+    vec_char = c("A", "B", "C", "D", "E", "F", "G", "H", "I", "J"),
+    vec_factor = factor(c("Apple","Bee","Cat","Apple","Bee","Cat","Apple","Bee","Cat","Apple"))
+  )
+mean(p2_df$vec_numeric)
+mean(p2_df$vec_logic)
+mean(p2_df %>% pull(vec_numeric))
+mean(p2_df %>% pull(vec_logic))
+mean(p2_df$vec_char)
+mean(p2_df$vec_factor)
+mean(p2_df %>% pull(vec_char))
+mean(p2_df %>% pull(vec_factor))
+```
+By previous output, we find out that both numeric and logical type could be works by take mean of it, but other two type, character and factor, can not work by take mean of it.
+
+```{r problem 2.2, eval=FALSE}
+mean(as.numeric(p2_df %>% pull(vec_logic)))
+mean(as.numeric(p2_df %>% pull(vec_char)))
+mean(as.numeric(p2_df %>% pull(vec_factor)))
+```
+The logical type still getting same solution as previous by taking the mean directly. Character type is still not working even after numeric it, all value just transfer into NA. Factor type works on mean() after transfer into numeric value. It transfer into 1,2,and 3, in three factor cases, and then get the mean of it. 
