@@ -13,11 +13,28 @@ library(tidyverse)
   For problem 1, after download `palmerpenguins` package, I read `penguins` data from the package `palmerpenguins`. And then we summary the penguins data in order to collect names and values of these important variables.
 ```{r summary penguins data problem 0.2}
 data("penguins", package = "palmerpenguins")
-summary(penguins)
-```
- The penguin data have `r ncol(penguins)` columns which means have `r ncol(penguins)` variables and `r nrow(penguins)` rows means `r nrow(penguins)` observations. Based on the `summary(penguins)`, The `r ncol(penguins)` variables are `r colnames(penguins)`. The mean of flipper length is `r mean(penguins$flipper_length_mm, na.rm = TRUE)` mm.
 
-```{r problem 1 plot, message=FALSE}
+```
+ The penguin data have `r ncol(penguins)` columns which means have `r ncol(penguins)` variables and `r nrow(penguins)` rows means `r nrow(penguins)` observations.The `r ncol(penguins)` variables are `r colnames(penguins)`. 
+ 
+------------------------------------------------------------
+*   The `r colnames(penguins)[1]` variable  is contain categorical value of 3 species of penguins, Adelie, Chinstrap, and Gentoo. 
+
+*   The `r colnames(penguins)[2]` variable is also contain categorical value, 3 islan,d that penguins exhibit, including Biscoe, Dream, and Torgersen.
+
+*   The `r colnames(penguins)[3]` variable contain the numerical value of length of penguin length in milliliter in between `r min(pull(penguins, bill_length_mm), na.rm = TRUE)`mm to `r max(pull(penguins, bill_length_mm), na.rm = TRUE)`mm with a mean of `r mean(pull(penguins, bill_length_mm), na.rm = TRUE)` mm. 
+
+*   The `r colnames(penguins)[4]` variable contain the numerical value of depth of penguin bill in milliliter in between `r min(pull(penguins, bill_depth_mm),  na.rm = TRUE)`mm to `r max(pull(penguins, bill_depth_mm), na.rm = TRUE)`mm with a mean of `r mean(pull(penguins, bill_depth_mm), na.rm = TRUE)` mm. 
+
+*   The `r colnames(penguins)[5]` variable contain the numerical value of length of penguin flipper in milliliter in between `r min(pull(penguins, flipper_length_mm),  na.rm = TRUE)`mm to `r max(pull(penguins, flipper_length_mm), na.rm = TRUE)`mm with a mean of `r mean(pull(penguins, flipper_length_mm), na.rm = TRUE)` mm. 
+
+*   The `r colnames(penguins)[6]` variable contain the numerical value of weight for penguins in gram in between `r min(pull(penguins, body_mass_g), na.rm = TRUE)`g to `r max(pull(penguins, body_mass_g), na.rm = TRUE)`g with a mean of `r mean(pull(penguins, body_mass_g), na.rm = TRUE)`g. 
+
+*   The `r colnames(penguins)[7]` variable contain categorical value of penguins gender, male and female.
+
+*   The `r colnames(penguins)[8]` variable contain the numerical value of the year for penguins been studies in from `r min(pull(penguins, year), na.rm = TRUE)` to `r max(pull(penguins, year), na.rm = TRUE)`. 
+
+```{r problem 1 plot, echo=FALSE, message=FALSE}
 ggplot(penguins, aes(y = flipper_length_mm, x = bill_length_mm, color = species)) + geom_point()
 ggsave("penguins_p1_scatterplot.pdf")
 ```
@@ -32,20 +49,17 @@ p2_df =
     vec_char = c("A", "B", "C", "D", "E", "F", "G", "H", "I", "J"),
     vec_factor = factor(c("Apple","Bee","Cat","Apple","Bee","Cat","Apple","Bee","Cat","Apple"))
   )
-mean(p2_df$vec_numeric)
-mean(p2_df$vec_logic)
-mean(p2_df %>% pull(vec_numeric))
-mean(p2_df %>% pull(vec_logic))
-mean(p2_df$vec_char)
-mean(p2_df$vec_factor)
-mean(p2_df %>% pull(vec_char))
-mean(p2_df %>% pull(vec_factor))
+
+mean(pull(p2_df, vec_numeric))
+mean(pull(p2_df, vec_logic))
+mean(pull(p2_df, vec_char))
+mean(pull(p2_df, vec_factor))
 ```
 By previous output, we find out that both numeric and logical type could be works by take mean of it, but other two type, character and factor, can not work by take mean of it.
 
 ```{r problem 2.2, eval=FALSE}
-mean(as.numeric(p2_df %>% pull(vec_logic)))
-mean(as.numeric(p2_df %>% pull(vec_char)))
-mean(as.numeric(p2_df %>% pull(vec_factor)))
+mean(as.numeric(pull(p2_df, vec_logic)))
+mean(as.numeric(pull(p2_df, vec_char)))
+mean(as.numeric(pull(p2_df, vec_factor)))
 ```
 The logical type still getting same solution as previous by taking the mean directly. Character type is still not working even after numeric it, all value just transfer into NA. Factor type works on mean() after transfer into numeric value. It transfer into 1,2,and 3, in three factor cases, and then get the mean of it. 
