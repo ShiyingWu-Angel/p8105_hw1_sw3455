@@ -36,14 +36,14 @@ data("penguins", package = "palmerpenguins")
 Then I used the ggplot formula to create the plot that `flipper_length_mm` is y and `bill_length_mm` is x with color based on species. The geom_point() is for scatter plot. Due to there are warning based on there are missing value existed in the data, so we used geom_point(na.rm = TRUE) to remove the missing value. 
 
 
-```{r problem 1 plot, message=FALSE}
+```{r problem 1 plot, message = FALSE}
 ggplot(penguins, aes(y = flipper_length_mm, x = bill_length_mm, color = species)) + geom_point(na.rm = TRUE)
 ggsave("penguins_p1_scatterplot.pdf")
 ```
 
 ## Problem 2
-For problem 2, we used the tibble to create data frame that contain four type of variable. And then take mean on each variable to check which type would the mean() works.
-```{r problem 2.1}
+For problem 2, we used the tibble to create data frame that contain four type of variable. And then take mean on each variable to check which type would the mean() works.Due to there is warning when we taking mean beside of numerical and logical variable, we use warning = FALSE to remove it.
+```{r problem 2.1, warning = FALSE}
 p2_df = 
   tibble(
     vec_numeric = rnorm(10),
@@ -57,9 +57,9 @@ mean(pull(p2_df, vec_logic))
 mean(pull(p2_df, vec_char))
 mean(pull(p2_df, vec_factor))
 ```
-Based on result and warning, we find out that both numeric and logical type could be works by take mean of it, but other two type, character and factor, can not work by take mean of it.
+Based on result and warning, we find out that both numeric and logical type could be works by take mean of it, but other two type, character and factor, can not work by take mean of it. Due to we do not need to print result, so I use eval = FALSE
 
-```{r problem 2.2, eval=FALSE}
+```{r problem 2.2, eval = FALSE, warning = FALSE}
 mean(as.numeric(pull(p2_df, vec_logic)))
 mean(as.numeric(pull(p2_df, vec_char)))
 mean(as.numeric(pull(p2_df, vec_factor)))
